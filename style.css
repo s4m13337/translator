@@ -1,0 +1,262 @@
+/* Base Variables */
+:root {
+    /* Color Palette - Dark Mode (Default) */
+    --bg-color: #0f0f11;
+    --surface-color: #1e1e24;
+    --text-primary: #ffffff;
+    --text-secondary: #a0a0a0;
+    --accent-color: #3b82f6; /* Modern Blue */
+    --accent-hover: #2563eb;
+    --border-color: #333333;
+    
+    /* Spacing & Sizes */
+    --spacing-xs: 0.5rem;   /* 8px */
+    --spacing-sm: 1rem;     /* 16px */
+    --spacing-md: 1.5rem;   /* 24px */
+    --spacing-lg: 2rem;     /* 32px */
+    --br-radius: 8px;
+    --header-height: 60px;
+}
+
+/* Light Mode Overrides */
+[data-theme="light"] {
+    --bg-color: #f3f4f6;
+    --surface-color: #ffffff;
+    --text-primary: #111827;
+    --text-secondary: #4b5563;
+    --accent-color: #2563eb;
+    --accent-hover: #1d4ed8;
+    --border-color: #e5e7eb;
+}
+
+/* Reset & Base Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Prevent body scroll, let areas scroll */
+}
+
+/* Header */
+header {
+    height: var(--header-height);
+    padding: 0 var(--spacing-md);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    background-color: var(--bg-color);
+    z-index: 10;
+}
+
+h1 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+}
+
+/* Theme Toggle Button */
+.icon-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: var(--spacing-xs);
+    border-radius: var(--br-radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-btn:hover {
+    color: var(--text-primary);
+    background-color: var(--surface-color);
+}
+
+/* Main Layout */
+main {
+    flex: 1;
+    display: flex;
+    flex-direction: row; /* Side by side on desktop */
+    height: calc(100vh - var(--header-height));
+    position: relative;
+}
+
+/* Sections (Input/Output) */
+.section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid var(--border-color);
+    background-color: var(--bg-color);
+    position: relative;
+    min-width: 0; /* Prevent flex overflow */
+}
+
+.section:last-child {
+    border-right: none;
+}
+
+/* Section Header (Language Select) */
+.section-header {
+    padding: var(--spacing-sm);
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    height: 50px;
+}
+
+.lang-select {
+    background: transparent;
+    color: var(--text-primary);
+    border: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    outline: none;
+    appearance: none; /* Custom styling often requires removing default appearance */
+    padding-right: 1rem;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23a0a0a0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right center;
+    background-size: 1em;
+}
+
+.lang-select:hover {
+    color: var(--accent-color);
+}
+
+/* Text Areas */
+.text-area-container {
+    flex: 1;
+    position: relative;
+}
+
+textarea {
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    color: var(--text-primary);
+    border: none;
+    resize: none;
+    padding: var(--spacing-md);
+    font-size: 1.125rem;
+    line-height: 1.6;
+    outline: none;
+    font-family: inherit;
+}
+
+textarea::placeholder {
+    color: var(--text-secondary);
+    opacity: 0.5;
+}
+
+/* Output specific styles */
+.output-section {
+    background-color: var(--surface-color); /* Slightly lighter/different for output */
+}
+
+/* Controls Container (Swap & Translate) */
+.controls-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    z-index: 20;
+    pointer-events: none; /* Allow clicks to pass through around buttons */
+}
+
+.control-btn {
+    pointer-events: auto;
+    background-color: var(--surface-color);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    transition: transform 0.1s ease, background-color 0.2s;
+}
+
+.control-btn:hover {
+    background-color: var(--border-color);
+    transform: scale(1.05); /* Subtle lift */
+}
+
+.translate-fab {
+    pointer-events: auto;
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    position: absolute;
+    bottom: var(--spacing-lg);
+    right: var(--spacing-lg);
+    z-index: 30;
+}
+
+.translate-fab:hover {
+    background-color: var(--accent-hover);
+}
+
+.translate-fab .icon {
+    width: 1.25em;
+    height: 1.25em;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    main {
+        flex-direction: column;
+        height: auto;
+        min-height: calc(100vh - var(--header-height));
+    }
+
+    .section {
+        min-height: 50vh;
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+    }
+    
+    /* Hide the center swap button on mobile or reposition it?
+       Usually standard is just top/bottom. Let's keep it simple.
+    */
+    .controls-overlay {
+        display: none; /* Hide swap button overlay on mobile to avoid clutter */
+    }
+
+    /* We need a mobile swap button inside the header or accessible elsewhere. 
+       For simplicity as per requirements: "After the two vertical columns, there must be a button"
+       Actually requirement said: "Position this button such that it is visually appropriate."
+    */
+
+    .translate-fab {
+        position: fixed;
+        bottom: var(--spacing-md);
+        right: var(--spacing-md);
+    }
+}

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Translator</title>
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <!-- Config & Logic -->
+    <script src="config.js"></script>
+    <script src="app.js"></script>
+</head>
+
+<body x-data="translator">
+
+    <header>
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <!-- Header Icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m5 8 6 6" />
+                <path d="m4 14 6-6 2-3" />
+                <path d="M2 5h12" />
+                <path d="M7 2h1" />
+                <path d="m22 22-5-10-5 10" />
+                <path d="M14 18h6" />
+            </svg>
+            <h1 id="app-title">Translator</h1>
+        </div>
+
+        <button class="icon-btn" @click="toggleTheme()" :title="'Switch theme'">
+            <!-- Sun Icon (Show in Dark Mode) -->
+            <svg x-show="theme === 'dark'" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="5" />
+                <path d="M12 1v2" />
+                <path d="M12 21v2" />
+                <path d="M4.22 4.22l1.42 1.42" />
+                <path d="M18.36 18.36l1.42 1.42" />
+                <path d="M1 12h2" />
+                <path d="M21 12h2" />
+                <path d="M4.22 19.78l1.42-1.42" />
+                <path d="M18.36 5.64l1.42-1.42" />
+            </svg>
+            <!-- Moon Icon (Show in Light Mode) -->
+            <svg x-show="theme === 'light'" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+            </svg>
+            <!-- Monitor/System Icon (Show in System Mode) -->
+            <svg x-show="theme === 'system'" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <rect width="20" height="14" x="2" y="3" rx="2" />
+                <line x1="8" x2="16" y1="21" y2="21" />
+                <line x1="12" x2="12" y1="17" y2="21" />
+            </svg>
+        </button>
+    </header>
+
+    <main>
+        <!-- Source Section -->
+        <div class="section">
+            <div class="section-header">
+                <select class="lang-select" x-model="sourceLang">
+                    <template x-for="lang in languages" :key="lang.code">
+                        <option :value="lang.code" x-text="lang.name" :selected="sourceLang === lang.code"></option>
+                    </template>
+                </select>
+            </div>
+            <div class="text-area-container">
+                <textarea x-model="inputText" placeholder="Type here..." spellcheck="false"></textarea>
+            </div>
+        </div>
+
+        <!-- Controls Overlay (Center Desktop) -->
+        <div class="controls-overlay">
+            <button class="control-btn" @click="swapLanguages()" title="Swap languages">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="16 3 21 3 21 8"></polyline>
+                    <line x1="4" y1="20" x2="21" y2="3"></line>
+                    <polyline points="21 16 21 21 16 21"></polyline>
+                    <line x1="15" y1="15" x2="21" y2="21"></line>
+                    <line x1="4" y1="4" x2="9" y2="9"></line>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Target Section -->
+        <div class="section output-section">
+            <div class="section-header">
+                <select class="lang-select" x-model="targetLang">
+                    <template x-for="lang in languages" :key="lang.code">
+                        <option :value="lang.code" x-text="lang.name" :selected="targetLang === lang.code"></option>
+                    </template>
+                </select>
+            </div>
+            <div class="text-area-container">
+                <textarea x-model="outputText" placeholder="Translation will appear here..." readonly></textarea>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Translate Floating Action Button -->
+    <!-- Positioned absolutely as per design choice to be 'visually appropriate' after columns -->
+    <button class="translate-fab" @click="translate()" :disabled="isLoading">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
+            <path d="m5 8 6 6" />
+            <path d="m4 14 6-6 2-3" />
+            <path d="M2 5h12" />
+            <path d="M7 2h1" />
+            <path d="m22 22-5-10-5 10" />
+            <path d="M14 18h6" />
+        </svg>
+        <span x-show="!isLoading">Translate</span>
+        <span x-show="isLoading">Translating...</span>
+    </button>
+
+</body>
+
+</html>
