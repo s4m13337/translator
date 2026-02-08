@@ -13,7 +13,8 @@ The project just has 4 files
 - `style.css`
 - `app.js`
 - `config.example.js`
+- Caddyfile
 
-Copy the files to your server and configure your webserver to serve the `index.html` file. Rename the `config.example.js` file to `config.js`. Obtain an API key from DeepL and add it to `config.js`
+Copy the files to your server and configure your webserver to serve the `index.html` file. Rename the `config.example.js` file to `config.js`. Obtain an API key from DeepL and add it to `config.js`. Also copy the contents of Caddyfile to your own configuration.
 
 
