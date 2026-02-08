@@ -5,15 +5,20 @@
     --surface-color: #1e1e24;
     --text-primary: #ffffff;
     --text-secondary: #a0a0a0;
-    --accent-color: #3b82f6; /* Modern Blue */
+    --accent-color: #3b82f6;
+    /* Modern Blue */
     --accent-hover: #2563eb;
     --border-color: #333333;
-    
+
     /* Spacing & Sizes */
-    --spacing-xs: 0.5rem;   /* 8px */
-    --spacing-sm: 1rem;     /* 16px */
-    --spacing-md: 1.5rem;   /* 24px */
-    --spacing-lg: 2rem;     /* 32px */
+    --spacing-xs: 0.5rem;
+    /* 8px */
+    --spacing-sm: 1rem;
+    /* 16px */
+    --spacing-md: 1.5rem;
+    /* 24px */
+    --spacing-lg: 2rem;
+    /* 32px */
     --br-radius: 8px;
     --header-height: 60px;
 }
@@ -43,7 +48,8 @@ body {
     height: 100vh;
     display: flex;
     flex-direction: column;
-    overflow: hidden; /* Prevent body scroll, let areas scroll */
+    overflow: hidden;
+    /* Prevent body scroll, let areas scroll */
 }
 
 /* Header */
@@ -86,7 +92,8 @@ h1 {
 main {
     flex: 1;
     display: flex;
-    flex-direction: row; /* Side by side on desktop */
+    flex-direction: row;
+    /* Side by side on desktop */
     height: calc(100vh - var(--header-height));
     position: relative;
 }
@@ -99,7 +106,8 @@ main {
     border-right: 1px solid var(--border-color);
     background-color: var(--bg-color);
     position: relative;
-    min-width: 0; /* Prevent flex overflow */
+    min-width: 0;
+    /* Prevent flex overflow */
 }
 
 .section:last-child {
@@ -123,7 +131,8 @@ main {
     font-weight: 500;
     cursor: pointer;
     outline: none;
-    appearance: none; /* Custom styling often requires removing default appearance */
+    appearance: none;
+    /* Custom styling often requires removing default appearance */
     padding-right: 1rem;
     background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23a0a0a0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
     background-repeat: no-repeat;
@@ -162,7 +171,8 @@ textarea::placeholder {
 
 /* Output specific styles */
 .output-section {
-    background-color: var(--surface-color); /* Slightly lighter/different for output */
+    background-color: var(--surface-color);
+    /* Slightly lighter/different for output */
 }
 
 /* Controls Container (Swap & Translate) */
@@ -175,7 +185,8 @@ textarea::placeholder {
     flex-direction: column;
     gap: var(--spacing-sm);
     z-index: 20;
-    pointer-events: none; /* Allow clicks to pass through around buttons */
+    pointer-events: none;
+    /* Allow clicks to pass through around buttons */
 }
 
 .control-btn {
@@ -196,7 +207,8 @@ textarea::placeholder {
 
 .control-btn:hover {
     background-color: var(--border-color);
-    transform: scale(1.05); /* Subtle lift */
+    transform: scale(1.05);
+    /* Subtle lift */
 }
 
 .translate-fab {
@@ -228,6 +240,26 @@ textarea::placeholder {
     height: 1.25em;
 }
 
+/* Header Translate Button (Mobile Only) */
+.header-translate-btn {
+    display: none;
+    /* Hidden on desktop */
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: var(--br-radius);
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    margin-right: var(--spacing-xs);
+}
+
+.header-translate-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
 /* Mobile Responsive */
 @media (max-width: 768px) {
     main {
@@ -237,26 +269,50 @@ textarea::placeholder {
     }
 
     .section {
-        min-height: 50vh;
+        min-height: 40vh;
+        /* Reduced to fit both on screen better */
         border-right: none;
         border-bottom: 1px solid var(--border-color);
     }
-    
-    /* Hide the center swap button on mobile or reposition it?
-       Usually standard is just top/bottom. Let's keep it simple.
-    */
-    .controls-overlay {
-        display: none; /* Hide swap button overlay on mobile to avoid clutter */
+
+    /* Hide theme toggle on mobile */
+    .icon-btn {
+        display: none;
     }
 
-    /* We need a mobile swap button inside the header or accessible elsewhere. 
-       For simplicity as per requirements: "After the two vertical columns, there must be a button"
-       Actually requirement said: "Position this button such that it is visually appropriate."
-    */
+    /* Reveal header translate button */
+    .header-translate-btn {
+        display: block;
+        margin-right: 0;
+        /* Align to edge */
+    }
 
+    /* Hide FAB on mobile */
     .translate-fab {
-        position: fixed;
-        bottom: var(--spacing-md);
-        right: var(--spacing-md);
+        display: none;
+    }
+
+    /* Reposition Swap Button for Mobile */
+    .controls-overlay {
+        display: flex;
+        /* Show it */
+        position: relative;
+        top: auto;
+        left: auto;
+        transform: none;
+        height: 0;
+        /* Don't take up space in flow, just sit on border */
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        z-index: 20;
+    }
+
+    /* Align button to sit exactly on the border line */
+    /* Flexbox (align-items: center) on the height:0 overlay already centers it vertically. */
+    /* No need for translateY, otherwise it sits too high. */
+    .control-btn {
+        margin-top: 0;
+        transform: none;
     }
 }

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Translator</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=2">
 
     <!-- Alpine.js -->
     <script defer src="alpine.js"></script>
@@ -31,6 +31,12 @@
             </svg>
             <h1 id="app-title">Translator</h1>
         </div>
+
+        <!-- Mobile Translate Button -->
+        <button class="header-translate-btn" @click="translate()" :disabled="isLoading">
+            <span x-show="!isLoading">Translate</span>
+            <span x-show="isLoading">...</span>
+        </button>
 
         <button class="icon-btn" @click="toggleTheme()" :title="'Switch theme'">
             <!-- Sun Icon (Show in Dark Mode) -->
