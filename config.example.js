@@ -9,7 +9,7 @@ const CONFIG = {
     API_KEY: '',
 
     // API URL - Using corsproxy.io to bypass browser CORS restrictions for client-side use
-    API_URL: 'https://corsproxy.io/?https://api-free.deepl.com/v2/translate',
+    API_URL: '/api/deepl/v2/translate',
 
     // App Title
     TITLE: 'Translator',

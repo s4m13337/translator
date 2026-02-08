@@ -1,0 +1,13 @@
+:8080 {
+    # Serve static files from the current directory
+    root * .
+    file_server
+
+    # Reverse proxy for DeepL API to bypass CORS
+    # Matches requests to /api/deepl/* and strips the prefix before forwarding
+    handle_path /api/deepl/* {
+        reverse_proxy https://api-free.deepl.com {
+            header_up Host api-free.deepl.com
+        }
+    }
+}
