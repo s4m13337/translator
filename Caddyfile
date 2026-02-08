@@ -8,6 +8,7 @@
     handle_path /api/deepl/* {
         reverse_proxy https://api-free.deepl.com {
             header_up Host api-free.deepl.com
+            header_up Authorization {header.Authorization}
         }
     }
 }
